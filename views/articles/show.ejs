@@ -9,15 +9,29 @@
 <hr>
 
 <h2>Comments:</h2>
+
+<h3>Add a new comment <a href="#newcomment">here</a>.</h3>
+
 <% if (article.comment) { %>
   <% article.comment.forEach( com => { %>
     <%= com.name %> (<%= moment(com.createdAt).calendar()%>) commented:
     <p><%= com.content %></p>
   <% }) %>
-<% } else { %>
-<p>No comments yet!</p>
 <% } %>
 
+<form id="newcomment">
+  <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="e.g. Jane Doe" name="name">
+    </div>
+    
+    <div class="form-group">
+      <label for="comment">Comment</label>
+      <textarea class="form-control" id="comment" rows="3" name="content" placeholder="Your thoughts here..."></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-2">Submit Comment</button>
+</form>
 <hr>
 
 <a href="/">&larr; Back Home</a>
