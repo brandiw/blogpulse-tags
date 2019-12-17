@@ -1,0 +1,14 @@
+Part 1: Create a Comment model
+
+Draft code:
+--create model+migrate
+1. sequelize model:create --name comment --attributes name:string,content:text,articleId:integer
+2. adjust the migration to default/null values
+3. define associations
+4. sequelize db:migrate
+
+--associations
+1. in comment:
+models.comment.belongsTo(models.article)
+2. in article:
+models.article.hasMany(models.comment)
