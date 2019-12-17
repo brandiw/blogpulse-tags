@@ -8,7 +8,7 @@
 
 <hr>
 
-<h2>Comments:</h2>
+<h2>Comments <span class="badge badge-secondary"><%= article.comments.length %></span></h2>
 
 <h3>Add a new comment <a href="#newcomment">here</a>.</h3>
 
@@ -18,8 +18,11 @@
   <% article.comments.forEach( com => { %>
     <h4><%= com.name %> (<%= moment(com.createdAt).calendar()%>) commented: </h4>
     <p><%= com.content %></p>
+  </br>
   <% }) %>
 <% } %>
+
+<hr>
 
 <form id="newcomment" method="POST" action="/articles/<%= article.id %>/comments">
   <div class="form-group">
