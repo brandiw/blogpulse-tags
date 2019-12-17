@@ -6,6 +6,18 @@
 
 <p><%= article.content %></p>
 
-<hr />
+<hr>
+
+<h2>Comments:</h2>
+<% if (article.comment) { %>
+  <% article.comment.forEach( com => { %>
+    <%= com.name %> (<%= moment(com.createdAt).calendar()%>) commented:
+    <p><%= com.content %></p>
+  <% }) %>
+<% } else { %>
+<p>No comments yet!</p>
+<% } %>
+
+<hr>
 
 <a href="/">&larr; Back Home</a>
