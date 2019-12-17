@@ -11,9 +11,11 @@
       <div class="well">
         <h2>
           <a href="/articles/<%= a.id %>"><%= a.title %></a>
+          <!-- use prototype defined for authors to get full name -->
           <small>by <%= a.author.getFullName() %></small>
         </h2>
         <p>
+          <!-- used to display date relative to now, using calendar method of moment -->
           <strong><%= moment(a.createdAt).calendar() %></strong>
         </p>
       </div>

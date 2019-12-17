@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     models.author.hasMany(models.article)
   }
 
+  //prototype inherited by all js objects in author table
   author.prototype.getFullName = function(){
     return this.firstName + ' ' + this.lastName
   }

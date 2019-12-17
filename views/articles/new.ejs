@@ -8,6 +8,7 @@
 
   <div class="form-group">
     <label for="author">Author</label>
+    <!-- creates dropdown to choose only authors available -->
     <select name="authorId" id="author" class="form-control" required>
       <% authors.forEach(function(author) { %>
         <option value="<%= author.id %>"><%= author.getFullName() %></option>

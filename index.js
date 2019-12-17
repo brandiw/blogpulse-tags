@@ -1,20 +1,20 @@
 var express = require('express')
 var ejsLayouts = require('express-ejs-layouts')
-var db = require('./models')
-var moment = require('moment')
-var rowdy = require('rowdy-logger')
+var db = require('./models') //access database tables
+var moment = require('moment') //used for formatting dates
+var rowdy = require('rowdy-logger') //used to render table of express routes
 var app = express()
 
 rowdy.begin(app)
 
 app.set('view engine', 'ejs')
 
-app.use(require('morgan')('dev'))
-app.use(express.urlencoded({ extended: false }))
+app.use(require('morgan')('dev')) 
+app.use(express.urlencoded({ extended: false })) //body parser
 app.use(ejsLayouts)
-app.use(express.static(__dirname + '/public/'))
+app.use(express.static(__dirname + '/public/')) //_dirname is method used to get current directory of file
 
-// middleware that allows us to access the 'moment' library in every EJS view
+// middleware that allows us to access the 'moment' library in every EJS view (custom)
 app.use(function(req, res, next) {
   res.locals.moment = moment
   next()

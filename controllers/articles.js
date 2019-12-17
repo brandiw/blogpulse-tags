@@ -2,7 +2,7 @@ var express = require('express')
 var db = require('../models')
 var router = express.Router()
 
-// POST /articles - create a new post
+// POST /articles - create a new post anf get redirected to all articles
 router.post('/', function(req, res) {
   db.article.create({
     title: req.body.title,

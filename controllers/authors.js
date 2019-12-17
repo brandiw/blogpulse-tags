@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
   })
 })
 
-// POST /authors - create a new author
+// POST /authors - create a new author and get redirected to authors page
 router.post('/', function(req, res) {
   db.author.create({
     firstName: req.body.firstName,
