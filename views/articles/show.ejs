@@ -12,15 +12,18 @@
 
 <h3>Add a new comment <a href="#newcomment">here</a>.</h3>
 
-<% if (article.comment) { %>
-  <% article.comment.forEach( com => { %>
-    <%= com.name %> (<%= moment(com.createdAt).calendar()%>) commented:
+<hr>
+
+<% if (article.comments) { %>
+  <% article.comments.forEach( com => { %>
+    <h4><%= com.name %> (<%= moment(com.createdAt).calendar()%>) commented: </h4>
     <p><%= com.content %></p>
   <% }) %>
 <% } %>
 
-<form id="newcomment">
+<form id="newcomment" method="POST" action="/articles/<%= article.id %>/comments">
   <div class="form-group">
+    <input type="hidden" name="articleId" value="<%= article.id %>">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name" placeholder="e.g. Jane Doe" name="name">
     </div>

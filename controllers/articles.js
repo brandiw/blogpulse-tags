@@ -36,7 +36,7 @@ router.get('/:id', function(req, res) {
   })
   .then(function(article) {
     if (!article) throw Error()
-    console.log(article.author)
+    console.log(article)
     res.render('articles/show', { article: article })
   })
   .catch(function(error) {
