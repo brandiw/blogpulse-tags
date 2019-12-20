@@ -9,7 +9,7 @@ rowdy.begin(app)
 
 app.set('view engine', 'ejs')
 
-app.use(require('morgan')('dev')) 
+app.use(require('morgan')('dev'))
 app.use(express.urlencoded({ extended: false })) //body parser
 app.use(ejsLayouts)
 app.use(express.static(__dirname + '/public/')) //_dirname is method used to get current directory of file
@@ -35,7 +35,8 @@ app.get('/', function(req, res) {
 // bring in authors and articles controllers
 app.use('/authors', require('./controllers/authors'))
 app.use('/articles', require('./controllers/articles'))
-app.use('/', require('./controllers/comments'))
+app.use('/comments', require('./controllers/comments'))
+app.use('/tags', require('./controllers/tags'))
 
 var server = app.listen(process.env.PORT || 3000, function() {
   rowdy.print()

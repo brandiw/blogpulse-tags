@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   //prototype inherited by all js objects in author table
-  author.prototype.getFullName = function(){
+  author.prototype.getFullName = function() {
     return this.firstName + ' ' + this.lastName
   }
   return author

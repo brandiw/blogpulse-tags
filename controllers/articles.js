@@ -1,48 +1,69 @@
-var express = require('express')
-var db = require('../models')
-var router = express.Router()
+let async = require('async')
+let express = require('express')
+let db = require('../models')
+let router = express.Router()
+let generalError = require('../loggers/generalError')
 
 // POST /articles - create a new post anf get redirected to all articles
-router.post('/', function(req, res) {
+router.post('/', (req, res) => {
+  let tags = []
+  if (req.body.tags) {
+    tags = req.body.tags.split(',')
+  }
+
   db.article.create({
     title: req.body.title,
     content: req.body.content,
     authorId: req.body.authorId
   })
-  .then(function(post) {
-    res.redirect('/')
+  .then(article => {
+    if (tags.length) {
+      // MORE BETTER!
+      async.forEach(tags, (t, done) => {
+        db.tag.findOrCreate({
+          where: { content: t.trim() }
+        })
+        .then(([tag, wasCreated]) => {
+          article.addTag(tag)
+          .then(() => {
+            done()
+          })
+          .catch(done) // End of adding to join table
+        })
+        .catch(done) // End of finding or creating tag
+      }, () => {
+        // Executes one time only when entire list is complete
+        // (all done functions have been called for each iteration)
+        res.redirect('/articles/' + article.id)
+      })
+    }
+    else {
+      res.redirect('/articles/' + article.id)
+    }
   })
-  .catch(function(error) {
-    res.status(400).render('main/404')
-  })
+  .catch(generalError)
 })
 
 // GET /articles/new - display form for creating new articles
 router.get('/new', function(req, res) {
   db.author.findAll()
-  .then(function(authors) {
+  .then((authors) => {
     res.render('articles/new', { authors: authors })
   })
-  .catch(function(error) {
-    res.status(400).render('main/404')
-  })
+  .catch(generalError)
 })
 
 // GET /articles/:id - display a specific post and its author
 router.get('/:id', function(req, res) {
   db.article.findOne({
     where: { id: req.params.id },
-    include: [ {model: db.author}, {model: db.comment}]
+    include: [db.author, db.comment, db.tag]
   })
-  .then(function(article) {
+  .then((article) => {
     if (!article) throw Error()
-    console.log(article)
-    res.render('articles/show', { article: article })
+    res.render('articles/show', { article })
   })
-  .catch(function(error) {
-    console.log(error)
-    res.status(400).render('main/404')
-  })
+  .catch(generalError)
 })
 
 module.exports = router

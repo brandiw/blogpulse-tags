@@ -2,7 +2,7 @@ var express = require('express')
 var db = require('../models')
 var router = express.Router()
 
-router.post('/articles/:id/comments', (req, res) => {
+router.post('/', (req, res) => {
     db.comment.create(req.body)
     .then( com => {
         res.redirect('/articles/' + req.params.id )

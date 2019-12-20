@@ -6,6 +6,13 @@
 
 <p><%= article.content %></p>
 
+<% article.tags.forEach(t => { %>
+  <a href="/tags/<%=t.id%>">
+    #<%=t.content%>
+  </a>
+  &nbsp;
+<% }) %>
+
 <hr>
 
 <h2>Comments <span class="badge badge-secondary"><%= article.comments.length %></span></h2>
@@ -24,13 +31,13 @@
 
 <hr>
 
-<form id="newcomment" method="POST" action="/articles/<%= article.id %>/comments">
+<form id="newcomment" method="POST" action="/comments">
   <div class="form-group">
     <input type="hidden" name="articleId" value="<%= article.id %>">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name" placeholder="e.g. Jane Doe" name="name">
     </div>
-    
+
     <div class="form-group">
       <label for="comment">Comment</label>
       <textarea class="form-control" id="comment" rows="3" name="content" placeholder="Your thoughts here..."></textarea>
